@@ -1,8 +1,6 @@
 <script setup>
-
-
   const props=defineProps({
-    balance:{
+    currentBalance:{
       type:String,
       default:"0",
     }
@@ -11,5 +9,5 @@
 
 <template>
   <h4>Your Balance</h4>
-  <h1 id="balance">${{ balance }}</h1>
+  <h1 id="balance">${{ currentBalance }}</h1>
 </template>

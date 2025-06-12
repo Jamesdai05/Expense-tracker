@@ -15,7 +15,7 @@ const transactions=[
 
 let text=ref("");
 let amount=ref("")
-const allTransctions=ref(transactions)
+const allTransctions=ref([...transactions])
 const balance=ref("1000")
 // let incomeExpense=ref({
 //   income:0,
@@ -34,9 +34,10 @@ const expense=computed(()=>{
   return allTransctions.value.filter(t=>t.amount<0).reduce((a,c)=>a+c.amount,0)
 })
 
-const totalBalance=ref(transactions.reduce((acc,cur)=>acc+cur.amount,0).toFixed(2))
-const updatedBalance=computed(()=>{
-  return (parseFloat(balance.value)+parseFloat(totalBalance.value)).toFixed(2);
+
+const currentBalance=computed(()=>{
+  const totalBalance=allTransctions.value.reduce((acc,cur)=>acc+cur.amount,0).toFixed(2)
+  return (parseFloat(balance.value)+parseFloat(totalBalance)).toFixed(2);
 })
 // console.log(updatedBalance);
 // add the event to the form
@@ -73,7 +74,7 @@ const onDelete=(id)=>{
 <template>
   <Header />
   <div class="container">
-    <Balance :balance="updatedBalance"/>
+    <Balance :currentBalance="currentBalance"/>
     <IncomeExpense :income="income" :expense="expense"/>
     <History :transactions="allTransctions" @delete-transaction="onDelete"/>
     <AddTransaction @submit="onSubmit" v-model:amount="amount" v-model:text="text" />
