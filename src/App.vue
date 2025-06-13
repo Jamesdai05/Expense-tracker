@@ -61,6 +61,8 @@ const onSubmit=(e)=>{
   allTransctions.value=[...allTransctions.value,newTransaction],
   text.value="";
   amount.value=""
+
+  toast.success("New item added successfully!")
 }
 
 const onDelete=(id)=>{
