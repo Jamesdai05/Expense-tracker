@@ -23,7 +23,7 @@ const emit = defineEmits<{
   <ul id="list" class="list">
     <li :class="{'minus':transaction.amount<0,'plus':transaction.amount>0}" v-for="transaction in transactions" :key="transaction.id">
       <!-- {{ transaction.text }} <span>{{ transaction.amount }}</span><button class="delete-btn" type="submit" @click="handleDelete(transaction.id)">x</button> -->
-      {{ transaction.text }} <span>{{ transaction.amount }}</span><button class="delete-btn" type="submit" @click="$emit('delete-transaction',transaction.id)">x</button>
+      {{ transaction.text }} <span>{{ transaction.amount.toFixed(2) }}</span><button class="delete-btn" type="submit" @click="$emit('delete-transaction',transaction.id)">x</button>
       <!-- Cash <span>-$400</span><button class="delete-btn">x</button> -->
     </li>
   </ul>
