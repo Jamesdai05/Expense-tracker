@@ -5,6 +5,7 @@ import Balance from './components/Balance.vue';
 import History from "./components/History.vue";
 import IncomeExpense from './components/IncomeExpense.vue';
 import AddTransaction from './components/AddTransaction.vue';
+import { useToast } from 'vue-toastification';
 
 const transactions=[
   {id:1,text:"Flower",amount:-29.99},
@@ -13,17 +14,13 @@ const transactions=[
   {id:4,text:"Play Station",amount:-699.99},
 ]
 
+const toast=useToast();
+
 let text=ref("");
 let amount=ref("")
 const allTransctions=ref([...transactions])
 const balance=ref("1000")
-// let incomeExpense=ref({
-//   income:0,
-//   expense:0,
-// })
-// const history=ref(transactions)
 
-// const incomeCal=transactions.filter(item=>item.amount>0).reduce((a,c)=>{c.amount>0 ? a+c.amount : c.amount},0);
 
 const income=computed(()=>{
   return allTransctions.value.filter(t=>t.amount>0).reduce((a,c)=>a+c.amount,0)
@@ -46,12 +43,14 @@ const onSubmit=(e)=>{
   const trimmedText = text.value.trim();
   const amountValue = amount.value.trim();
   if (!trimmedText || trimmedText.length < 2) {
-    alert('Please enter a valid description (at least 2 characters)');
+    // alert('Please enter a valid description (at least 2 characters)');
+    toast.error('Please enter a valid description (at least 2 characters)');
     return;
   }
 
   if (!amountValue || isNaN(parseFloat(amountValue))) {
-    alert('Please enter a valid amount');
+    // alert('Please enter a valid amount');
+    toast.error('Please enter a valid amount.')
     return;
   }
   const newTransaction={
